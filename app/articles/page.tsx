@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/app/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { formatDate } from "@/app/lib/format-date";
 
 export const metadata = {
   title: "Articles",
@@ -101,12 +102,4 @@ function ArticleCard({ article }: ArticleCardProps) {
       </div>
     </article>
   );
-}
-
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
 }
