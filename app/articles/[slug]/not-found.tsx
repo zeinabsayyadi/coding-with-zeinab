@@ -9,7 +9,11 @@ export default function NotFound() {
         The article you're looking for doesn't exist or hasn't been published
         yet.
       </p>
-      <Button render={<Link href="/articles" />} className="mt-8">
+      <Button
+        nativeButton={false}
+        render={<Link href="/articles" />}
+        className="mt-8"
+      >
         Back to all articles
       </Button>
     </main>

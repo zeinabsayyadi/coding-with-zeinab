@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { LinkedInIcon } from "./components/icons/linkdin";
 import { GitHubIcon } from "./components/icons/github";
+import { LinkButton } from "./components/link-button";
 
 export default async function HomePage() {
   const latestArticles = await prisma.article.findMany({
@@ -63,52 +64,43 @@ function Hero() {
 
         <ul className="mt-6 flex flex-wrap gap-2">
           <li>
-            <Button
+            <LinkButton
+              href={author.github}
+              external
               variant="outline"
               size="sm"
-              render={
-                <a
-                  href={author.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
             >
               <GitHubIcon className="mr-2 h-4 w-4" />
               GitHub
-            </Button>
+            </LinkButton>
           </li>
           <li>
-            <Button
+            <LinkButton
+              href={author.linkedin}
+              external
               variant="outline"
               size="sm"
-              render={
-                <a
-                  href={author.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
             >
               <LinkedInIcon className="mr-2 h-4 w-4" />
               LinkedIn
-            </Button>
+            </LinkButton>
           </li>
           <li>
-            <Button
+            <LinkButton
+              href={`mailto:${author.email}`}
+              external
               variant="outline"
               size="sm"
-              render={<a href={`mailto:${author.email}`} />}
             >
               <Mail className="mr-2 h-4 w-4" />
               Email
-            </Button>
+            </LinkButton>
           </li>
           <li>
-            <Button variant="outline" size="sm" render={<a href="/rss.xml" />}>
+            <LinkButton href="/rss.xml" external variant="outline" size="sm">
               <Rss className="mr-2 h-4 w-4" />
               RSS
-            </Button>
+            </LinkButton>
           </li>
         </ul>
       </div>
@@ -202,7 +194,7 @@ function Footer() {
       <p>
         © {new Date().getFullYear()} {siteConfig.author.name}
       </p>
-      <p>Built with Next.js, Prisma, and Shiki.</p>
+      <p></p>
     </footer>
   );
 }

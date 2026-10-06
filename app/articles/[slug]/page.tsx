@@ -12,6 +12,8 @@ import { formatDate } from "@/app/lib/format-date";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { LikeButton } from "@/app/components/like-button";
+import { LinkButton } from "@/app/components/link-button";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -73,15 +75,15 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      <Button
-        render={<Link href="/articles" />}
+      <LinkButton
+        href="/articles"
         variant="ghost"
         size="sm"
         className="mb-8 -ml-3"
       >
         <ArrowLeft className="mr-2 h-4 w-4" />
         All articles
-      </Button>
+      </LinkButton>
 
       <header className="mb-10">
         <h1 className="text-4xl font-bold tracking-tight">{article.title}</h1>
@@ -142,6 +144,14 @@ export default async function ArticlePage({ params }: PageProps) {
         >
           {article.content}
         </ReactMarkdown>
+        <div className="mt-10 flex items-center gap-3">
+          <LikeButton articleId={article.id} />
+          <span className="text-sm text-muted-foreground">
+            {article._count.likes === 0
+              ? "Be the first to like this"
+              : `${article._count.likes} ${article._count.likes === 1 ? "like" : "likes"}`}
+          </span>
+        </div>
       </article>
 
       {gallery.length > 0 && (
@@ -196,6 +206,7 @@ export default async function ArticlePage({ params }: PageProps) {
           <div className="flex flex-wrap gap-3">
             {article.projectUrl && (
               <Button
+                nativeButton={false}
                 render={
                   <a
                     href={article.projectUrl}
@@ -209,6 +220,7 @@ export default async function ArticlePage({ params }: PageProps) {
             )}
             {article.githubUrl && (
               <Button
+                nativeButton={false}
                 render={
                   <a
                     href={article.githubUrl}
