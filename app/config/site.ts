@@ -14,4 +14,10 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/in/your-username",
     location: "Remote",
   },
+  giscus: {
+    repo: "zeinabsayyadi/coding-with-zeinab" as `${string}/${string}`,
+    repoId: "R_kgDOU99nSA",
+    category: "comments",
+    categoryId: "DIC_kwDOU99nSM4DHMTz",
+  },
 } as const;

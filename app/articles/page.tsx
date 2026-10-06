@@ -103,3 +103,5 @@ function ArticleCard({ article }: ArticleCardProps) {
     </article>
   );
 }
+
+export const dynamic = "force-dynamic";

@@ -11,7 +11,6 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
 model Article {
   id        String   @id @default(cuid())
   slug      String   @unique
@@ -27,8 +26,6 @@ model Article {
   projectUrl     String?
   githubUrl      String?
 
-  likes     Like[]
-
   published   Boolean   @default(false)
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
@@ -37,18 +34,6 @@ model Article {
   tags Tag[]
 
   @@index([published, publishedAt])
-}
-
-model Like {
-  id        String   @id @default(cuid())
-  articleId String
-  visitorId String
-  createdAt DateTime @default(now())
-
-  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
-
-  @@unique([articleId, visitorId])
-  @@index([articleId])
 }
 
 model Tag {

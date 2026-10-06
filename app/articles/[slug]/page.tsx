@@ -12,8 +12,8 @@ import { formatDate } from "@/app/lib/format-date";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { LikeButton } from "@/app/components/like-button";
 import { LinkButton } from "@/app/components/link-button";
+import { Giscus } from "@/app/components/giscus";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -57,7 +57,6 @@ export default async function ArticlePage({ params }: PageProps) {
     where: { slug },
     include: {
       tags: { select: { name: true, slug: true } },
-      _count: { select: { likes: true } },
     },
   });
 
@@ -144,14 +143,6 @@ export default async function ArticlePage({ params }: PageProps) {
         >
           {article.content}
         </ReactMarkdown>
-        <div className="mt-10 flex items-center gap-3">
-          <LikeButton articleId={article.id} />
-          <span className="text-sm text-muted-foreground">
-            {article._count.likes === 0
-              ? "Be the first to like this"
-              : `${article._count.likes} ${article._count.likes === 1 ? "like" : "likes"}`}
-          </span>
-        </div>
       </article>
 
       {gallery.length > 0 && (
@@ -236,6 +227,12 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
         </>
       )}
+      <section className="mt-16">
+        <h2 className="mb-6 text-2xl font-semibold tracking-tight">Comments</h2>
+        <Giscus />
+      </section>
     </main>
   );
 }
+
+export const dynamic = "force-dynamic";

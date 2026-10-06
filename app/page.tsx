@@ -7,7 +7,6 @@ import { siteConfig } from "@/app/config/site";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { LinkedInIcon } from "./components/icons/linkdin";
 import { GitHubIcon } from "./components/icons/github";
@@ -198,3 +197,5 @@ function Footer() {
     </footer>
   );
 }
+
+export const dynamic = "force-dynamic";

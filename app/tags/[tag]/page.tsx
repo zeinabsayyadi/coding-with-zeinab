@@ -121,3 +121,5 @@ export default async function TagPage({ params }: PageProps) {
     </main>
   );
 }
+
+export const dynamic = "force-dynamic";
