@@ -1,69 +1,208 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Mail, Rss } from "lucide-react";
 
-export default function Home() {
+import { prisma } from "@/app/lib/prisma";
+import { formatDate } from "@/app/lib/format-date";
+import { siteConfig } from "@/app/config/site";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { LinkedInIcon } from "./components/icons/linkdin";
+import { GitHubIcon } from "./components/icons/github";
+
+export default async function HomePage() {
+  const latestArticles = await prisma.article.findMany({
+    where: { published: true },
+    orderBy: { publishedAt: "desc" },
+    take: 3,
+    select: {
+      slug: true,
+      title: true,
+      subtitle: true,
+      publishedAt: true,
+      tags: { select: { name: true, slug: true } },
+    },
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/6 px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="mx-auto max-w-3xl px-6 py-16">
+      <Hero />
+      <Separator className="my-16" />
+      <LatestArticles articles={latestArticles} />
+      <Separator className="my-16" />
+      <Footer />
+    </main>
+  );
+}
+
+function Hero() {
+  const { author } = siteConfig;
+
+  return (
+    <section className="flex flex-col gap-8 sm:flex-row sm:items-start sm:gap-10">
+      <Avatar className="h-28 w-28 shrink-0 border">
+        <AvatarImage src={author.avatar} alt={author.name} />
+        <AvatarFallback className="text-2xl">
+          {author.name.charAt(0)}
+        </AvatarFallback>
+      </Avatar>
+
+      <div className="min-w-0">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          Hi, I&apos;m {author.name}.
+        </h1>
+        <p className="mt-2 text-lg text-muted-foreground">
+          {author.role} · {author.location}
+        </p>
+
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          {author.bio}
+        </p>
+
+        <ul className="mt-6 flex flex-wrap gap-2">
+          <li>
+            <Button
+              variant="outline"
+              size="sm"
+              render={
+                <a
+                  href={author.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <GitHubIcon className="mr-2 h-4 w-4" />
+              GitHub
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="outline"
+              size="sm"
+              render={
+                <a
+                  href={author.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              <LinkedInIcon className="mr-2 h-4 w-4" />
+              LinkedIn
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="outline"
+              size="sm"
+              render={<a href={`mailto:${author.email}`} />}
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              Email
+            </Button>
+          </li>
+          <li>
+            <Button variant="outline" size="sm" render={<a href="/rss.xml" />}>
+              <Rss className="mr-2 h-4 w-4" />
+              RSS
+            </Button>
+          </li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+type LatestArticlesProps = {
+  articles: {
+    slug: string;
+    title: string;
+    subtitle: string | null;
+    publishedAt: Date | null;
+    tags: { name: string; slug: string }[];
+  }[];
+};
+
+function LatestArticles({ articles }: LatestArticlesProps) {
+  return (
+    <section>
+      <header className="mb-8 flex items-baseline justify-between">
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Latest articles
+        </h2>
+        <Link
+          href="/articles"
+          className="text-sm text-muted-foreground hover:text-foreground hover:underline"
+        >
+          All articles →
+        </Link>
+      </header>
+
+      {articles.length === 0 ? (
+        <p className="text-muted-foreground">
+          No articles yet. Check back soon.
+        </p>
+      ) : (
+        <ul className="space-y-8">
+          {articles.map((article) => (
+            <li key={article.slug}>
+              <article className="group">
+                <Link href={`/articles/${article.slug}`} className="block">
+                  <h3 className="text-xl font-semibold tracking-tight transition-colors group-hover:text-primary">
+                    {article.title}
+                  </h3>
+                  {article.subtitle && (
+                    <p className="mt-1.5 text-muted-foreground">
+                      {article.subtitle}
+                    </p>
+                  )}
+                </Link>
+
+                <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+                  {article.publishedAt && (
+                    <time
+                      dateTime={article.publishedAt.toISOString()}
+                      className="text-muted-foreground"
+                    >
+                      {formatDate(article.publishedAt)}
+                    </time>
+                  )}
+                  {article.tags.length > 0 && (
+                    <ul className="flex flex-wrap gap-2">
+                      {article.tags.map((tag) => (
+                        <li key={tag.slug}>
+                          <Link href={`/tags/${tag.slug}`}>
+                            <Badge
+                              variant="secondary"
+                              className="cursor-pointer hover:bg-secondary/80"
+                            >
+                              {tag.name}
+                            </Badge>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {new Date().getFullYear()} {siteConfig.author.name}
+      </p>
+      <p>Built with Next.js, Prisma, and Shiki.</p>
+    </footer>
   );
 }
