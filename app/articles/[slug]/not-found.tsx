@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/app/components/link-button";
 
 export default function NotFound() {
   return (
@@ -9,13 +8,10 @@ export default function NotFound() {
         The article you're looking for doesn't exist or hasn't been published
         yet.
       </p>
-      <Button
-        nativeButton={false}
-        render={<Link href="/articles" />}
-        className="mt-8"
-      >
+
+      <LinkButton href="/articles" variant="link" size="sm" className="mt-8">
         Back to all articles
-      </Button>
+      </LinkButton>
     </main>
   );
 }

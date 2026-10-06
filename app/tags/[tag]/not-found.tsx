@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/app/components/link-button";
 
 export default function NotFound() {
   return (
@@ -8,9 +7,9 @@ export default function NotFound() {
       <p className="mt-3 text-muted-foreground">
         This tag doesn't exist, or no articles have been published with it yet.
       </p>
-      <Button className="mt-8" render={<Link href="/articles" />}>
+      <LinkButton href="/articles" variant="ghost" size="sm">
         Back to all articles
-      </Button>
+      </LinkButton>
     </main>
   );
 }

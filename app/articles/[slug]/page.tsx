@@ -11,7 +11,6 @@ import { prisma } from "@/app/lib/prisma";
 import { formatDate } from "@/app/lib/format-date";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/app/components/link-button";
 import { Giscus } from "@/app/components/giscus";
 
@@ -196,33 +195,24 @@ export default async function ArticlePage({ params }: PageProps) {
           <Separator className="my-12" />
           <div className="flex flex-wrap gap-3">
             {article.projectUrl && (
-              <Button
-                nativeButton={false}
-                render={
-                  <a
-                    href={article.projectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+              <LinkButton
+                href={article.projectUrl}
+                external
+                variant="default"
+                size="sm"
               >
                 View project
-              </Button>
+              </LinkButton>
             )}
             {article.githubUrl && (
-              <Button
-                nativeButton={false}
-                render={
-                  <a
-                    href={article.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
+              <LinkButton
+                href={article.githubUrl}
+                external
                 variant="outline"
+                size="sm"
               >
                 View on GitHub
-              </Button>
+              </LinkButton>
             )}
           </div>
         </>

@@ -6,8 +6,8 @@ import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/app/lib/prisma";
 import { formatDate } from "@/app/lib/format-date";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { LinkButton } from "@/app/components/link-button";
 
 type PageProps = {
   params: Promise<{ tag: string }>;
@@ -60,16 +60,10 @@ export default async function TagPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      <Button
-        variant="ghost"
-        size="sm"
-        className="mb-8 -ml-3"
-        render={<Link href="/articles" />}
-      >
+      <LinkButton href="/articles" variant="ghost" size="sm">
         <ArrowLeft className="mr-2 h-4 w-4" />
         All articles
-      </Button>
-
+      </LinkButton>
       <header className="mb-12">
         <div className="flex items-center gap-3">
           <Badge variant="secondary">{found.name}</Badge>
