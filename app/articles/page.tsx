@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { formatDate } from "@/app/lib/format-date";
+import { formatDate } from "@/lib/format-date";
 
 export const metadata = {
   title: "Articles",

@@ -1,8 +1,8 @@
 import { createHighlighterCoreSync } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
-import githubDark from "shiki/themes/github-dark.mjs";
-import githubLight from "shiki/themes/github-light.mjs";
+import catppuccinMocha from "shiki/themes/catppuccin-mocha.mjs";
+import catppuccinLatte from "shiki/themes/catppuccin-latte.mjs";
 
 import langBash from "shiki/langs/bash.mjs";
 import langCss from "shiki/langs/css.mjs";
@@ -19,7 +19,7 @@ import langTypeScript from "shiki/langs/typescript.mjs";
 import langYaml from "shiki/langs/yaml.mjs";
 
 export const highlighter = createHighlighterCoreSync({
-  themes: [githubDark, githubLight],
+  themes: [catppuccinMocha, catppuccinLatte],
   langs: [
     langBash,
     langCss,

@@ -4,11 +4,11 @@ import type { Metadata } from "next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeShikiFromHighlighter from "@shikijs/rehype/core";
-import { highlighter } from "@/app/lib/shiki";
+import { highlighter } from "@/lib/shiki";
 import { ArrowLeft } from "lucide-react";
 
-import { prisma } from "@/app/lib/prisma";
-import { formatDate } from "@/app/lib/format-date";
+import { prisma } from "@/lib/prisma";
+import { formatDate } from "@/lib/format-date";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { LinkButton } from "@/app/components/link-button";
@@ -135,7 +135,7 @@ export default async function ArticlePage({ params }: PageProps) {
               rehypeShikiFromHighlighter,
               highlighter,
               {
-                themes: { light: "github-light", dark: "github-dark" },
+                themes: { light: "catppuccin-latte", dark: "catppuccin-mocha" },
               },
             ],
           ]}

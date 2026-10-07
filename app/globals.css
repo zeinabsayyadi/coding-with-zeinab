@@ -141,3 +141,13 @@
   color: var(--shiki-dark);
   background-color: var(--shiki-dark-bg);
 }
+
+/* Override the background in light mode */
+.shiki {
+  background-color: var(--muted) !important;
+}
+
+/* Override the background in dark mode */
+.dark .shiki {
+  background-color: #0b0e14 !important;
+}

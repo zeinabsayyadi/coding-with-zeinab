@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Mail, Rss } from "lucide-react";
 
-import { prisma } from "@/app/lib/prisma";
-import { formatDate } from "@/app/lib/format-date";
+import { prisma } from "@/lib/prisma";
+import { formatDate } from "@/lib/format-date";
 import { siteConfig } from "@/app/config/site";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
