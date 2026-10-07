@@ -6,8 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "postinstall": "prisma skills sync || exit 0"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "db:dev": "prisma dev --port 51214 --shadow-port 51215",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio --url \"postgres://postgres:postgres@localhost:51214/template1?sslmode=disable\"",
+    "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
