@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
-
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format-date";
 import { Badge } from "@/components/ui/badge";
@@ -12,11 +11,6 @@ import { LinkButton } from "@/app/components/link-button";
 type PageProps = {
   params: Promise<{ tag: string }>;
 };
-
-export async function generateStaticParams() {
-  const tags = await prisma.tag.findMany({ select: { slug: true } });
-  return tags.map((t) => ({ tag: t.slug }));
-}
 
 export async function generateMetadata({
   params,

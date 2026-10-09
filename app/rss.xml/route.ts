@@ -1,9 +1,10 @@
 import { Feed } from "feed";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/app/config/site";
 
-export const revalidate = 3600;
+// export const revalidate = 3600;
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   const articles = await prisma.article.findMany({
     where: { published: true },
